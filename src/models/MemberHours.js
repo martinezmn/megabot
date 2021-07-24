@@ -15,7 +15,7 @@ class memberHours extends Model {
                 primaryKey: true
             },
             online_at: {
-                type: DataTypes.BOOLEAN,
+                type: DataTypes.DATE,
                 allowNull: true
             },
             week: {
@@ -63,8 +63,8 @@ class memberHours extends Model {
             }
         });
 
-        if (memberHours.dataValues.online_at) {
-            return;
+        if (memberHours?.dataValues?.online_at) {
+            return false;
         }
 
         await Member.create({ id: member_id }, { ignoreDuplicates: true });
@@ -94,38 +94,39 @@ class memberHours extends Model {
 
     static async setOffline(member_id, guild_id) {
         const memberHours = await this.findOne({ where: { member_id, guild_id } });
+
         const dataValues = memberHours.dataValues;
 
         if (!memberHours.online_at) {
-            return;
+            return false;
         }
 
         const date = await dateHelper.date();
 
-        const minutes = await dateHelper.getMinutes(dataValues.online_at, date.now);
+        const seconds = await dateHelper.getSeconds(dataValues.online_at, date.now);
 
         if (dataValues.week == date.week) {
-            dataValues.week_total += minutes;
+            dataValues.week_total += seconds;
         } else {
             dataValues.last_week = dataValues.week_total;
             dataValues.week = date.week;
-            dataValues.week_total = minutes;
+            dataValues.week_total = seconds;
         }
 
         if (dataValues.month == date.month) {
-            dataValues.month_total += minutes;
+            dataValues.month_total += seconds;
         } else {
             dataValues.last_month = dataValues.month_total;
             dataValues.month = date.month;
-            dataValues.month_total = minutes;
+            dataValues.month_total = seconds;
         }
 
         if (dataValues.year == date.year) {
-            dataValues.year_total += minutes;
+            dataValues.year_total += seconds;
         } else {
             dataValues.last_year = dataValues.year_total;
             dataValues.year = date.year;
-            dataValues.year_total = minutes;
+            dataValues.year_total = seconds;
         }
 
         dataValues.online_at = null;

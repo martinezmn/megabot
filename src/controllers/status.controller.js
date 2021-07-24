@@ -36,17 +36,17 @@ module.exports = class StatusController {
 
     static async isOnline(oldState, newState) {
         if (newState.channelID && newState.channelID != newState.guild.afkChannelID) {
-            await MemberHours.setOnline(newState.id, newState.guild.id);
-
-            console.log(`User ${newState.id} is online`);
+            if (await MemberHours.setOnline(newState.id, newState.guild.id)) {
+                console.log(`User ${newState.id} is online`);
+            }
         }
     }
 
     static async isOffline(oldState, newState) {
         if (!newState.channelID || newState.channelID == newState.guild.afkChannelID) {
-            await MemberHours.setOffline(newState.id, newState.guild.id);
-
-            console.log(`User ${newState.id} is offline`);
+            if (await MemberHours.setOffline(newState.id, newState.guild.id)) {
+                console.log(`User ${newState.id} is offline`);
+            }
         }
     }
 

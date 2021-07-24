@@ -7,7 +7,7 @@ module.exports = {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     logging: false,
-    timezone: process.env.TIMEZONE,
+    // timezone: process.env.TIMEZONE,
     define: {
         charset: 'utf8',
         dialectOptions: {
