@@ -5,9 +5,11 @@ module.exports = class messageHelper {
     static async sendHelpDetails(message, forAllCommands, onlyAdminCommands) {
         let msg = new Discord.MessageEmbed();
 
+        const user = message.guild.members.cache.get(process.env.CLIENT_ID).user;
+
         msg.setColor(process.env.CARD_COLOR);
-        msg.setAuthor('Comandos do MegaBot', message.author.displayAvatarURL());
-        msg.setThumbnail('https://i.imgur.com/wSTFkRM.png');
+        msg.setAuthor('Comandos do MegaBot', user.displayAvatarURL());
+        msg.setThumbnail(user.displayAvatarURL());
         msg.addFields(
             { name: 'Para todos', value: forAllCommands },
             { name: process.env.ADMIN_ROLE, value: onlyAdminCommands }
