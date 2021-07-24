@@ -9,7 +9,7 @@ module.exports = [
     },
     {
         command: 'help',
-        onlyAdmin: true,
+        onlyAdmin: false,
         action: HelpController.help
     },
     {

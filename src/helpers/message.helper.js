@@ -10,10 +10,10 @@ module.exports = class messageHelper {
         msg.setColor(process.env.CARD_COLOR);
         msg.setAuthor('Comandos do MegaBot', user.displayAvatarURL());
         msg.setThumbnail(user.displayAvatarURL());
-        msg.addFields(
-            { name: 'Para todos', value: forAllCommands },
-            { name: process.env.ADMIN_ROLE, value: onlyAdminCommands }
-        );
+        msg.addFields({ name: 'Para todos', value: forAllCommands });
+        if (onlyAdminCommands.length > 0) {
+            msg.addFields({ name: process.env.ADMIN_ROLE, value: onlyAdminCommands });
+        }
 
         await message.channel.send(msg);
     }
