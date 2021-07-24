@@ -5,7 +5,7 @@
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 * Você instalou o `NodeJS`.
-* Você tem um banco de dados `MySQL ou PostgreSQL`.
+* Você tem um banco de dados `MySQL` ou `PostgreSQL`.
 
 ## 🚀 Instalação
 
@@ -39,10 +39,8 @@ Para adicionar o Megabot no seu servidor, acesse e copie o `CLIENT_ID` do seu bo
 https://discord.com/developers/applications/
 ```
 
-E com o `CLIENT_ID` acesse:
+Com o `CLIENT_ID` acesse e adicione o bot no servidor desejado:
 
 ```
-https://discord.com/oauth2/authorize?client_id=`CLIENT_ID`&scope=bot&permissions=8
+https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=8
 ```
-
-E adicione no servidor desejado.
