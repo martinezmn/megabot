@@ -25,7 +25,7 @@ Crie um arquivo `.env` com base no `.env.example` e configure os valores.
 
 ## ☕ Execução
 
-Para colocar o Megabot online:
+Colocando o Megabot online:
 
 ```
 npm start
@@ -39,7 +39,7 @@ Para adicionar o Megabot no seu servidor, acesse e copie o `CLIENT_ID` do seu bo
 https://discord.com/developers/applications/
 ```
 
-Com o `CLIENT_ID` acesse e adicione o bot no servidor desejado:
+Com o `CLIENT_ID` acesse o link abaixo e adicione o bot no servidor desejado:
 
 ```
 https://discord.com/oauth2/authorize?client_id=CLIENT_ID&scope=bot&permissions=8
