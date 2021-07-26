@@ -1,8 +1,7 @@
-const Discord = require('discord.js');
-const messageHelper = require('../helpers/message.helper');
+const HelpMessages = require('../messages/help.messages');
 
 module.exports = class HelpController {
-    static async help(guildConfig, message, args) {
+    static async index(guildConfig, message, args) {
 
         const commandsList = require('../commands');
 
@@ -20,6 +19,6 @@ module.exports = class HelpController {
         forAll = forAll.replace(/,\s*$/, "");
         onlyAdmin = onlyAdmin.replace(/,\s*$/, "");
 
-        return messageHelper.sendHelpDetails(guildConfig, message, forAll, onlyAdmin);
+        return await HelpMessages.index(guildConfig, message, forAll, onlyAdmin);
     }
 }

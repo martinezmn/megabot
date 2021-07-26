@@ -1,8 +1,8 @@
 const MemberHours = require('../models/MemberHours');
-const messageHelper = require('../helpers/message.helper');
+const StatusMessages = require('..//messages/status.messages');
 
 module.exports = class StatusController {
-    static async getStatus(guildConfig, message, args) {
+    static async index(guildConfig, message, args) {
         if (args.includes('all')) {
             if (args.length > 1) {
                 return await message.channel.send('O parâmetro `all` não deve ser utilizado junto com outros parâmetros');
@@ -15,7 +15,7 @@ module.exports = class StatusController {
             });
 
             for (const member of memberHours) {
-                messageHelper.sendRegisteredHours(guildConfig, message, member);
+                StatusMessages.registeredHours(guildConfig, message, member);
             }
 
             return;
@@ -27,10 +27,10 @@ module.exports = class StatusController {
             const memberHours = await MemberHours.findByPk(id);
 
             if (!memberHours) {
-                return messageHelper.sendNoRegisteredHours(guildConfig, message, id)
+                return StatusMessages.noRegisteredHours(guildConfig, message, id)
             }
 
-            messageHelper.sendRegisteredHours(guildConfig, message, memberHours);
+            StatusMessages.registeredHours(guildConfig, message, memberHours);
         }
     }
 
@@ -42,13 +42,11 @@ module.exports = class StatusController {
         }
     }
 
-    static async isOffline(oldState, newState) {
+    static async isOffline(guildConfig, oldState, newState) {
         if (!newState.channelID || newState.channelID == newState.guild.afkChannelID) {
-            if (await MemberHours.setOffline(newState)) {
+            if (await MemberHours.setOffline(guildConfig, newState)) {
                 console.log(`User ${newState.id} is offline`);
             }
         }
     }
-
-
 }

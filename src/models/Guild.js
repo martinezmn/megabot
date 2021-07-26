@@ -30,6 +30,16 @@ class guild extends Model {
             admin_role: config?.admin_role ?? process.env.ADMIN_ROLE
         };
     }
+
+    static async setConfig(guild_id, attribute, value) {
+        const guild = await this.findByPk(guild_id);
+
+        let config = JSON.parse(guild?.dataValues?.config);
+        config[attribute] = value;
+        config = JSON.stringify(config);
+
+        return await guild.update({ config });
+    }
 }
 
 module.exports = guild;
