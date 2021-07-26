@@ -12,7 +12,8 @@ module.exports = {
       guild_id: {
         type: Sequelize.STRING,
         primaryKey: true,
-        allowNull: false
+        allowNull: false,
+        references: { model: 'guilds', key: 'id' }
       },
       online_at: {
         type: Sequelize.DATE,
