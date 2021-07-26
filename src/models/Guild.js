@@ -35,6 +35,11 @@ class guild extends Model {
         const guild = await this.findByPk(guild_id);
 
         let config = JSON.parse(guild?.dataValues?.config);
+
+        if (!config) {
+            config = {};
+        }
+        
         config[attribute] = value;
         config = JSON.stringify(config);
 
