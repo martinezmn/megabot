@@ -8,6 +8,10 @@ module.exports = {
         primaryKey: true,
         autoIncrement: false
       },
+      config: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false
