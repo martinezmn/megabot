@@ -4,7 +4,7 @@ class member extends Model {
     static init(sequelize) {
         super.init({
             id: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 primaryKey: true
             }
         }, {
