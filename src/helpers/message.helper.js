@@ -10,6 +10,7 @@ module.exports = class messageHelper {
         msg.setColor(guildConfig.card_color);
         msg.setAuthor(`Comandos do ${process.env.BOT_NAME}`, user.displayAvatarURL());
         msg.setThumbnail(user.displayAvatarURL());
+        msg.setFooter(`Fuso horário: UTC ${guildConfig.timezone}`);
         if (forAllCommands.length > 0) {
             msg.addFields({ name: 'Para todos', value: forAllCommands });
         }
