@@ -28,6 +28,10 @@ client.on('ready', () => {
     // }
 });
 
+client.on("guildCreate", guild => {
+   guild.owner.send('Thanks! You can use +help to discover commands.')
+});
+
 client.on('message', async message => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
