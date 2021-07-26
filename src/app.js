@@ -27,7 +27,7 @@ client.on('ready', () => {
             name: '!help',
             type: "Listening"
         }
-    }
+    });
                          
     console.info(new Date(), `Started logged as ${client.user.tag}!`);
 
