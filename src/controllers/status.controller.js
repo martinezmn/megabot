@@ -19,8 +19,7 @@ module.exports = class StatusController {
 
             for (const member of memberHours) {
                 if (member.dataValues.online_at) {
-                    const onlineHours = dateHelper.getSeconds(member.dataValues.online_at, date.now);
-                    console.log(onlineHours);
+                    const onlineHours = await dateHelper.getSeconds(member.dataValues.online_at, date.now);
                     
                     member.dataValues.week_total += onlineHours;
                     member.dataValues.month_total += onlineHours;
