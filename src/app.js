@@ -25,7 +25,7 @@ client.on('ready', () => {
         status: 'online',
         activity: {
             name: '!help',
-            type: "Listening"
+            type: "LISTENING"
         }
     });
                          
