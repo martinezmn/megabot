@@ -30,7 +30,7 @@ client.on('ready', () => {
     // }
 });
 
-client.on("guildCreate", guild => {
+client.on("guildCreate", async guild => {
     await Guild.create({ id: guild.id }, { ignoreDuplicates: true });
     console.log(guild);
 });
