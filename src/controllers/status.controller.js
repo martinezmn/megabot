@@ -1,8 +1,11 @@
 const MemberHours = require('../models/MemberHours');
 const StatusMessages = require('..//messages/status.messages');
+const dateHelper = require('../helpers/date.helper');
 
 module.exports = class StatusController {
     static async index(guildConfig, message, args) {
+        const date = dateHelper.date(guildConfig.timezone);
+
         if (args.includes('all')) {
             if (args.length > 1) {
                 return await message.channel.send('O parâmetro `all` não deve ser utilizado junto com outros parâmetros');
@@ -15,6 +18,14 @@ module.exports = class StatusController {
             });
 
             for (const member of memberHours) {
+                if (member.dataValues.online_at) {
+                    const onlineHours = dateHelper.getSeconds(member.dataValues.online_at, date.now);
+                    
+                    member.dataValues.week_total += onlineHours;
+                    member.dataValues.month_total += onlineHours;
+                    member.dataValues.year_total += onlineHours;
+                }
+
                 StatusMessages.registeredHours(guildConfig, message, member);
             }
 
@@ -29,6 +40,15 @@ module.exports = class StatusController {
             if (!memberHours) {
                 return StatusMessages.noRegisteredHours(guildConfig, message, id)
             }
+
+            if (memberHours.dataValues.online_at) {
+                const onlineHours = dateHelper.getSeconds(memberHours.dataValues.online_at, date.now);
+
+                memberHours.dataValues.week_total += onlineHours;
+                memberHours.dataValues.month_total += onlineHours;
+                memberHours.dataValues.year_total += onlineHours;
+            }
+
 
             StatusMessages.registeredHours(guildConfig, message, memberHours);
         }
