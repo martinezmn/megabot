@@ -1,0 +1,10 @@
+version: '3.3'
+
+services:
+  megabot:
+    image: node:14
+    container_name: megabot
+    working_dir: /app
+    volumes:
+      - .:/app
+    command: bash -c "npm install && npm rebuild && npx sequelize db:migrate && npm start"
