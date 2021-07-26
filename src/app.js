@@ -21,6 +21,14 @@ require('./database');
 console.info(new Date(), 'Database connected');
 
 client.on('ready', () => {
+    bot.user.setPresence({
+        status: 'online',
+        activity: {
+            name: '!help',
+            type: "Listening"
+        }
+    }
+                         
     console.info(new Date(), `Started logged as ${client.user.tag}!`);
 
     // for (const channel of client.channels.cache.values()) {
