@@ -10,7 +10,9 @@ module.exports = class messageHelper {
         msg.setColor(process.env.CARD_COLOR);
         msg.setAuthor(`Comandos do ${process.env.BOT_NAME}`, user.displayAvatarURL());
         msg.setThumbnail(user.displayAvatarURL());
-        msg.addFields({ name: 'Para todos', value: forAllCommands });
+        if (forAllCommands.length > 0) {
+            msg.addFields({ name: 'Para todos', value: forAllCommands });
+        }
         if (onlyAdminCommands.length > 0) {
             msg.addFields({ name: process.env.ADMIN_ROLE, value: onlyAdminCommands });
         }
@@ -34,6 +36,10 @@ module.exports = class messageHelper {
             { name: 'Total do mês', value: await dateHelper.formatSeconds(member.dataValues.month_total) },
             { name: 'Total do ano', value: await dateHelper.formatSeconds(member.dataValues.year_total) }
         );
+        
+        const last_login = await dateHelper.date(member.dataValues.updated_at);
+        
+        msg.setFooter(`Último acesso: ${last_login.formated}`);
 
         await message.channel.send(msg);
     }
