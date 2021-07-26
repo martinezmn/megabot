@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 require('dotenv').config();
 
+const Guild = require('./models/Guild');
+
 console.info(new Date(), 'Starting to load commands');
 const commandsList = require('./commands');
 const Commands = {};
@@ -29,7 +31,8 @@ client.on('ready', () => {
 });
 
 client.on("guildCreate", guild => {
-    console.log('NOVA GUILD');
+    await Guild.create({ id: guild.id }, { ignoreDuplicates: true });
+    console.log(guild);
 });
 
 client.on('message', async message => {
