@@ -21,7 +21,7 @@ require('./database');
 console.info(new Date(), 'Database connected');
 
 client.on('ready', () => {
-    bot.user.setPresence({
+    client.user.setPresence({
         status: 'online',
         activity: {
             name: '!help',
