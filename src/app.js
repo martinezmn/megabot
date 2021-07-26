@@ -32,18 +32,19 @@ client.on('ready', () => {
 
 client.on("guildCreate", async guild => {
     await Guild.create({ id: guild.id }, { ignoreDuplicates: true });
-    console.log(guild);
 });
 
 client.on('message', async message => {
     if (message.author.bot) return;
     if (message.channel.type === 'dm') return;
 
-    if (message.content.charAt(0) != process.env.PREFIX) {
+    guildConfig = await Guild.getConfig(message.channel.guild.id);
+
+    if (message.content.charAt(0) != guildConfig.prefix) {
         return;
     }
 
-    const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
+    const args = message.content.slice(guildConfig.prefix.length).trim().split(/ +/g);
     const command = args.shift().toLocaleLowerCase();
 
     if (!Commands[command]) {
@@ -51,20 +52,21 @@ client.on('message', async message => {
     }
 
     if (!Commands[command].onlyAdmin) {
-        return await Commands[command].action(message, args);
+        return await Commands[command].action(guildConfig, message, args);
     }
     
-    if (message.member.hasPermission('ADMINISTRATOR') || message.member.roles.cache.some(role => role.name === process.env.ADMIN_ROLE)) {
-        return await Commands[command].action(message, args);
+    if (message.member.hasPermission('ADMINISTRATOR') || message.member.roles.cache.some(role => role.name === guildConfig.admin_role)) {
+        return await Commands[command].action(guildConfig, message, args);
     } else {
-        return await message.channel.send(`O comando \`${command}\` é exclusivo do cargo \`${process.env.ADMIN_ROLE}\``);
+        return await message.channel.send(`O comando \`${command}\` é exclusivo do cargo \`${guildConfig.admin_role}\``);
     }
 });
 
 client.on('voiceStateUpdate', async (oldState, newState) => {
     for (const event of Events) {
         if (event.event === 'voiceStateUpdate') {
-            await event.action(oldState, newState);
+            guildConfig = await Guild.getConfig(newState.guild.id);
+            await event.action(guildConfig, oldState, newState);
         }
     }
 });

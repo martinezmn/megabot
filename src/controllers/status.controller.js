@@ -2,7 +2,7 @@ const MemberHours = require('../models/MemberHours');
 const messageHelper = require('../helpers/message.helper');
 
 module.exports = class StatusController {
-    static async getStatus(message, args) {
+    static async getStatus(guildConfig, message, args) {
         if (args.includes('all')) {
             if (args.length > 1) {
                 return await message.channel.send('O parâmetro `all` não deve ser utilizado junto com outros parâmetros');
@@ -15,7 +15,7 @@ module.exports = class StatusController {
             });
 
             for (const member of memberHours) {
-                messageHelper.sendRegisteredHours(message, member);
+                messageHelper.sendRegisteredHours(guildConfig, message, member);
             }
 
             return;
@@ -27,16 +27,16 @@ module.exports = class StatusController {
             const memberHours = await MemberHours.findByPk(id);
 
             if (!memberHours) {
-                return messageHelper.sendNoRegisteredHours(message, id)
+                return messageHelper.sendNoRegisteredHours(guildConfig, message, id)
             }
 
-            messageHelper.sendRegisteredHours(message, memberHours);
+            messageHelper.sendRegisteredHours(guildConfig, message, memberHours);
         }
     }
 
-    static async isOnline(oldState, newState) {
+    static async isOnline(guildConfig, oldState, newState) {
         if (newState.channelID && newState.channelID != newState.guild.afkChannelID) {
-            if (await MemberHours.setOnline(newState.id, newState.guild.id)) {
+            if (await MemberHours.setOnline(guildConfig, newState)) {
                 console.log(`User ${newState.id} is online`);
             }
         }
@@ -44,7 +44,7 @@ module.exports = class StatusController {
 
     static async isOffline(oldState, newState) {
         if (!newState.channelID || newState.channelID == newState.guild.afkChannelID) {
-            if (await MemberHours.setOffline(newState.id, newState.guild.id)) {
+            if (await MemberHours.setOffline(newState)) {
                 console.log(`User ${newState.id} is offline`);
             }
         }

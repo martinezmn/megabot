@@ -56,7 +56,10 @@ class memberHours extends Model {
         });
     }
 
-    static async setOnline(member_id, guild_id) {
+    static async setOnline(guildConfig, state) {
+        const member_id = state.id;
+        const guild_id = state.guild.id;
+
         const memberHours = await this.findOne({
             where: {
                 member_id,
@@ -70,7 +73,7 @@ class memberHours extends Model {
 
         await Member.create({ id: member_id }, { ignoreDuplicates: true });
 
-        const date = await dateHelper.date();
+        const date = await dateHelper.date(guildConfig.timezone);
 
         const args = {
             member_id: member_id,
@@ -93,7 +96,10 @@ class memberHours extends Model {
         return await this.create(args);
     }
 
-    static async setOffline(member_id, guild_id) {
+    static async setOffline(guildConfig, state) {
+        const member_id = state.id;
+        const guild_id = state.guild.id;
+        
         const memberHours = await this.findOne({ where: { member_id, guild_id } });
 
         const dataValues = memberHours.dataValues;
@@ -102,7 +108,7 @@ class memberHours extends Model {
             return false;
         }
 
-        const date = await dateHelper.date();
+        const date = await dateHelper.date(guildConfig.timezone);
 
         const seconds = await dateHelper.getSeconds(dataValues.online_at, date.now);
 

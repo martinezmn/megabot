@@ -1,12 +1,12 @@
 const moment = require('moment');
 
 module.exports = class dateHelper {
-    static async date(date = null) {
+    static async date(timezone, date = null) {
         if (!date) {
             date = new Date();
         }
         
-        let momentDate = moment(date).utcOffset(process.env.TIMEZONE);
+        let momentDate = moment(date).utcOffset(timezone);
 
         return {
             now: date,
