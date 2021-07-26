@@ -24,7 +24,7 @@ module.exports = class StatusController {
         for (const value of args) {
             const id = value.replace(/\D/g, '');
 
-            const memberHours = await MemberHours.findByPk(id);
+            const memberHours = await MemberHours.findOne({ where: { member_id: id, guild_id: message.channel.guild.id }});
 
             if (!memberHours) {
                 return StatusMessages.noRegisteredHours(guildConfig, message, id)
