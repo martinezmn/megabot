@@ -12,7 +12,8 @@ class memberHours extends Model {
             },
             guild_id: {
                 type: DataTypes.BIGINT,
-                primaryKey: true
+                primaryKey: true,
+                references: { model: 'guilds', key: 'id' }
             },
             online_at: {
                 type: DataTypes.DATE,
