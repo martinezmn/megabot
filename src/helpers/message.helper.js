@@ -8,7 +8,7 @@ module.exports = class messageHelper {
         const user = message.guild.members.cache.get(process.env.CLIENT_ID).user;
 
         msg.setColor(process.env.CARD_COLOR);
-        msg.setAuthor('Comandos do MegaBot', user.displayAvatarURL());
+        msg.setAuthor(`Comandos do ${process.env.BOT_NAME}`, user.displayAvatarURL());
         msg.setThumbnail(user.displayAvatarURL());
         msg.addFields({ name: 'Para todos', value: forAllCommands });
         if (onlyAdminCommands.length > 0) {
