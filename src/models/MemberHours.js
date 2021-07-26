@@ -6,12 +6,12 @@ class memberHours extends Model {
     static init(sequelize) {
         super.init({
             member_id: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 primaryKey: true,
                 references: { model: 'members', key: 'id' }
             },
             guild_id: {
-                type: DataTypes.BIGINT,
+                type: DataTypes.STRING,
                 primaryKey: true,
                 references: { model: 'guilds', key: 'id' }
             },
