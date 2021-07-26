@@ -47,7 +47,7 @@ client.on('message', async message => {
         return await Commands[command].action(message, args);
     }
     
-    if (message.member.roles.cache.some(role => role.name === process.env.ADMIN_ROLE)) {
+    if (message.member.hasPermission('ADMINISTRATOR') || message.member.roles.cache.some(role => role.name === process.env.ADMIN_ROLE)) {
         return await Commands[command].action(message, args);
     } else {
         return await message.channel.send(`O comando \`${command}\` é exclusivo do cargo \`${process.env.ADMIN_ROLE}\``);
