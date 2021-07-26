@@ -10,7 +10,7 @@ module.exports = class dateHelper {
 
         return {
             now: date,
-            formated: momentDate.format(),
+            formated: momentDate.format('DD-MM-YYYY HH:mm:ss'),
             week: momentDate.week(),
             month: momentDate.month() + 1,
             year: momentDate.year(),
