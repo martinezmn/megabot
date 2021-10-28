@@ -13,7 +13,7 @@ Para instalar o Megabot, siga estas etapas:
 
 Clone o projeto:
 ```
-git clone https://github.com/megajr/megabot.git
+git clone https://github.com/martinezmn/megabot.git
 ```
 
 Instale as depêndencias:
